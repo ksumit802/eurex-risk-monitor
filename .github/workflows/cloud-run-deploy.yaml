@@ -3,7 +3,7 @@ name: Build and Deploy to Cloud Run
 on:
   push:
     branches:
-      - main  # your deploy branch
+      - main  # my deploy branch
 
 jobs:
   build-deploy:

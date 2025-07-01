@@ -46,5 +46,5 @@ jobs:
             --platform managed \
             --region europe-west3 \
             --allow-unauthenticated \
-            --quiet \ 
+            --quiet \
             --set-env-vars PROJECT_ID=${{ secrets.GCP_PROJECT_ID }},DATASET_ID=${{ secrets.DATASET_ID }},TABLE_ID=${{ secrets.TABLE_ID }}

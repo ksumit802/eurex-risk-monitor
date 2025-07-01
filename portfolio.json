@@ -1,0 +1,17 @@
+[
+  {
+    "symbol": "BAS.DE",
+    "quantity": 10,
+    "type": "equity"
+  },
+  {
+    "symbol": "BMW.DE",
+    "quantity": 5,
+    "type": "equity"
+  },
+  {
+    "symbol": "DBK.DE",
+    "quantity": 15,
+    "type": "equity"
+  }
+]

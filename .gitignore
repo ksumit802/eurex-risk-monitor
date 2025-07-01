@@ -1,0 +1,16 @@
+# Python environment
+.venv/
+__pycache__/
+*.pyc
+
+# Environment variables
+.env
+
+# GCP credentials
+risk-key.json
+
+# MacOS files
+.DS_Store
+
+# Docker
+*.log

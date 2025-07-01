@@ -1,0 +1,21 @@
+# Virtual environment
+.venv/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Environment/config
+.env
+risk-key.json
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+
+# Git itself
+.gitignore
+
+# Logs (optional)
+*.log

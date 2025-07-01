@@ -1,0 +1,40 @@
+name: Build and Deploy to Cloud Run
+
+on:
+  push:
+    branches:
+      - main  # or your deploy branch
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+      with:
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        export_default_credentials: true
+
+    - name: Build Docker image
+      run: |
+        docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/eurex-risk-monitor:${{ github.sha }} .
+
+    - name: Push Docker image
+      run: |
+        docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/eurex-risk-monitor:${{ github.sha }}
+
+    - name: Deploy to Cloud Run
+      run: |
+        gcloud run deploy eurex-risk-monitor \
+          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/eurex-risk-monitor:${{ github.sha }} \
+          --platform managed \
+          --region ${{ secrets.GCP_REGION }} \
+          --allow-unauthenticated \
+          --quiet \
+          --set-env-vars PROJECT_ID=${{ secrets.GCP_PROJECT_ID }},DATASET_ID=${{ secrets.DATASET_ID }},TABLE_ID=${{ secrets.TABLE_ID }}
+

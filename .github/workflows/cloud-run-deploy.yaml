@@ -3,7 +3,7 @@ name: Build and Deploy to Cloud Run
 on:
   push:
     branches:
-      - main  # or your deploy branch
+      - main  # your deploy branch
 
 jobs:
   build-deploy:
@@ -20,21 +20,24 @@ jobs:
         service_account_key: ${{ secrets.GCP_SA_KEY }}
         export_default_credentials: true
 
+    - name: Authenticate Docker with Artifact Registry
+      run: |
+        gcloud auth configure-docker europe-west3-docker.pkg.dev --quiet
+
     - name: Build Docker image
       run: |
-        docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/eurex-risk-monitor:${{ github.sha }} .
+        docker build -t europe-west3-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-repo/eurex-risk-monitor:${{ github.sha }} .
 
     - name: Push Docker image
       run: |
-        docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/eurex-risk-monitor:${{ github.sha }}
+        docker push europe-west3-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-repo/eurex-risk-monitor:${{ github.sha }}
 
     - name: Deploy to Cloud Run
       run: |
         gcloud run deploy eurex-risk-monitor \
-          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/eurex-risk-monitor:${{ github.sha }} \
+          --image europe-west3-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-repo/eurex-risk-monitor:${{ github.sha }} \
           --platform managed \
           --region ${{ secrets.GCP_REGION }} \
           --allow-unauthenticated \
           --quiet \
           --set-env-vars PROJECT_ID=${{ secrets.GCP_PROJECT_ID }},DATASET_ID=${{ secrets.DATASET_ID }},TABLE_ID=${{ secrets.TABLE_ID }}
-

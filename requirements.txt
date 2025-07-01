@@ -3,4 +3,4 @@ gunicorn==21.2.0
 yfinance==0.2.37
 pandas==2.2.2
 google-cloud-bigquery==3.17.2
-python-dotenv==1.0.1
+python-dotenv==1.0.1  

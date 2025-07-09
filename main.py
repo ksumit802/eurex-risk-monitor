@@ -10,7 +10,16 @@ import time
 
 # Load environment variables
 load_dotenv()
-#os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+
+#if os.getenv("ENVIRONMENT") == "local":
+    # Local environment: set credentials
+ #   os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+  #  print("Running in LOCAL environment. Credentials loaded.")
+#else:
+ #   # Cloud environment: skip credentials
+  #  print("Running in CLOUD environment. Skipping credentials setup.")
+
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 
 project_id = os.getenv("PROJECT_ID")
 dataset_id = os.getenv("DATASET_ID")

@@ -5,9 +5,6 @@
 __pycache__/
 *.py[cod]
 
-# Environment/config
-.env
-risk-key.json
 
 # Editor and OS files
 .vscode/
